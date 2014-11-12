@@ -16,12 +16,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     in.cpp \
-    out.cpp
+    out.cpp \
+    admin.cpp
 
 HEADERS  += mainwindow.h \
     in.h \
-    out.h
+    out.h \
+    admin.h
 
 FORMS    += mainwindow.ui \
     in.ui \
-    out.ui
+    out.ui \
+    admin.ui

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "in.h"
 #include "out.h"
+#include "admin.h"
 
 #include <QSqlDatabase>
 #include <QMessageBox>
@@ -63,7 +64,16 @@ void MainWindow::on_out_clicked()
 
 void MainWindow::on_admin_clicked()
 {
-
+    if(this -> db_connect()){
+        admin *adminWindow;
+        adminWindow = new admin();
+        this -> close();
+        adminWindow -> show();
+    } else {
+        QMessageBox msgBox;
+        msgBox.setText("无法连接数据库,请检查数据库是否启动,数据库服务器地址是否正确!");
+        msgBox.exec();
+    }
 }
 
 void MainWindow::on_nav_clicked()
