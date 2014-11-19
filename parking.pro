@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT += sql
+QT += xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,14 +18,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     in.cpp \
     out.cpp \
-    admin.cpp
+    admin.cpp \
+    map.cpp \
+    drawmap.cpp \
+    tileset.cpp \
+    nav.cpp
 
 HEADERS  += mainwindow.h \
     in.h \
     out.h \
-    admin.h
+    admin.h \
+    map.h \
+    drawmap.h \
+    tileset.h \
+    nav.h
 
 FORMS    += mainwindow.ui \
     in.ui \
     out.ui \
-    admin.ui
+    admin.ui \
+    nav.ui

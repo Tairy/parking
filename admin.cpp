@@ -1,8 +1,5 @@
 #include "admin.h"
 #include "ui_admin.h"
-#include <QtSql>
-#include <QtDebug>
-#include <QMessageBox>
 
 admin::admin(QWidget *parent) :
     QMainWindow(parent),
@@ -10,6 +7,7 @@ admin::admin(QWidget *parent) :
 {
     ui->setupUi(this);
     this -> initWindow();
+    setWindowTitle("停车场管理系统");
 }
 
 admin::~admin()
@@ -47,4 +45,17 @@ void admin::initWindow(){
         ui-> po_statu ->setItem(row_count, 2, item2);
         ui-> po_statu ->setItem(row_count, 3, item3);
     }
+}
+
+void admin::on_open_fille_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+             tr("Open XML File 1"), "/home", tr("XML Files (*.xml)"));
+        ui->FilePath->setText(fileName);
+}
+
+void admin::on_import_2_clicked()
+{
+    drawMap *map = new drawMap("/home/tairy/Documents/untitled1.xml");
+    map -> draw();
 }

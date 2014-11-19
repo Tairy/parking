@@ -2,6 +2,14 @@
 #define OUT_H
 
 #include <QMainWindow>
+#include <QDateTime>
+#include <QTimer>
+#include <QDebug>
+#include <QtSql>
+#include <QMessageBox>
+
+#include "mainwindow.h"
+
 
 namespace Ui {
 class out;

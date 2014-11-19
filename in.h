@@ -2,6 +2,12 @@
 #define IN_H
 
 #include <QMainWindow>
+#include <QDateTime>
+#include <QTimer>
+#include <QtSql>
+#include <QtDebug>
+#include <QMessageBox>
+#include "mainwindow.h"
 
 namespace Ui {
 class in;

@@ -1,11 +1,5 @@
 #include "in.h"
 #include "ui_in.h"
-#include "mainwindow.h"
-#include <QDateTime>
-#include <QTimer>
-#include <QtSql>
-#include <QtDebug>
-#include <QMessageBox>
 
 in::in(QWidget *parent) :
     QMainWindow(parent),

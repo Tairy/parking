@@ -2,6 +2,11 @@
 #define ADMIN_H
 
 #include <QMainWindow>
+#include <QtSql>
+#include <QtDebug>
+#include <QMessageBox>
+#include <QFileDialog>
+#include "drawmap.h"
 
 namespace Ui {
 class admin;
@@ -16,6 +21,11 @@ public:
     ~admin();
 
     void initWindow();
+
+private slots:
+    void on_open_fille_clicked();
+
+    void on_import_2_clicked();
 
 private:
     Ui::admin *ui;

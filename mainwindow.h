@@ -2,6 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSqlDatabase>
+#include <QMessageBox>
+
+#include "in.h"
+#include "out.h"
+#include "admin.h"
+
 
 namespace Ui {
 class MainWindow;

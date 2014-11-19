@@ -1,11 +1,5 @@
 #include "out.h"
 #include "ui_out.h"
-#include "mainwindow.h"
-#include <QDateTime>
-#include <QTimer>
-#include <QDebug>
-#include <QtSql>
-#include <QMessageBox>
 
 out::out(QWidget *parent) :
     QMainWindow(parent),
