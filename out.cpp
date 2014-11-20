@@ -49,7 +49,7 @@ void out::displayTime(){
 
 void out::on_textEdit_2_textChanged()
 {
-    QString input_car_num = ui -> textEdit_2 -> toPlainText();
+    QString input_car_num = ui -> textEdit_2 -> text();
     QSqlQuery qry;
     QString sql = "SELECT * FROM `spaces` WHERE `car_num`='";
     sql += input_car_num;
@@ -86,7 +86,7 @@ void out::on_textEdit_2_textChanged()
 
 void out::on_leave_clicked()
 {
-    QString input_car_num = ui -> textEdit_2 -> toPlainText();
+    QString input_car_num = ui -> textEdit_2 -> text();
     QString input_pos_id = ui -> car_pos -> text();
     QSqlQuery qry;
     QString sql = "DELETE FROM `spaces` WHERE `car_num` = '";

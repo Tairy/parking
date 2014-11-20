@@ -27,6 +27,10 @@ private slots:
 
     void on_import_2_clicked();
 
+    void on_viewmap_clicked();
+
+    void on_go_clicked();
+
 private:
     Ui::admin *ui;
 };

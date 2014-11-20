@@ -75,7 +75,7 @@ QString in::allocationPos(){
 void in::on_enter_clicked()
 {
     if(ui -> car_num -> isEnabled()){
-        QString input_car_num = ui -> car_num -> toPlainText();
+        QString input_car_num = ui -> car_num -> text();
         QString input_in_time = ui -> in_time -> text();
         QString input_place_id = ui -> pos -> text();
 

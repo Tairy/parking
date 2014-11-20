@@ -59,4 +59,78 @@ void admin::on_import_2_clicked()
     QString xmlFilePath = ui -> FilePath ->text();
     drawMap *map = new drawMap(xmlFilePath);
     map -> draw();
+
+    QSqlQuery qry;
+    QString sql = "INSERT INTO `config` (`key`, `value`) VALUES ('xmlpath','";
+    sql += xmlFilePath;
+    sql += "')";
+    qDebug() << sql;
+
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        return;
+    }
+}
+
+void admin::on_viewmap_clicked()
+{
+    QSqlQuery qry;
+    QString sql = "SELECT `value` FROM `config` WHERE `key`='xmlpath' LIMIT 1";
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        return;
+    }
+    if( qry.next() ){
+        QString xmlpath = qry.value(0).toString();
+        drawMap *map = new drawMap(xmlpath);
+        map -> draw();
+    }
+}
+
+void admin::on_go_clicked()
+{
+    QSqlQuery qry;
+    QString sql = "SELECT `value` FROM `config` WHERE `key`='xmlpath' LIMIT 1";
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        return;
+    }
+    if( qry.next() ){
+        QString xmlpath = qry.value(0).toString();
+    }
+
+    QString to_pos_num = ui -> to_pos_num ->text();
+    QSqlQuery qry, qry_door;
+    QString sql = "SELECT * FROM `car_pos` WHERE `pos_num`='";
+    sql += to_pos_num;
+    sql += "' LIMIT 1";
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        return;
+    }
+    if( qry.next() ){
+        QString x = qry.value(1).toString();
+        QString y = qry.value(2).toString();
+        QString width = qry.value(3).toString();
+        QString height = qry.value(4).toString();
+
+        QString door_pos_sql = "SELECT * FROM `car_pos` WHERE `type`='door'";
+        qry_door.prepare(door_pos_sql);
+        if( !qry_door.exec() ){
+            qDebug() << qry_door.lastError();
+            return;
+        }
+        if(qry_door.next()) {
+            QString door_x = qry.value(1).toString();
+            QString door_y = qry.value(2).toString();
+
+            drawMap *map = new drawMap(xmlpath);
+            map -> draw_widh_nav();
+        }
+    }
+
 }

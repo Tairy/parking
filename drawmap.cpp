@@ -48,8 +48,56 @@ void drawMap::parserXmlFile(){
     	}
     }
 
-//    QPixmap *screenBitmap = new QPixmap(mapWidth * tileWidth, mapHeight * tileHeight);
-//    QBitmap *screenBitmapTopLayer = new QBitmap(mapWidth*tileWidth,mapHeight*tileHeight);
+    QSqlQuery qry_get_config;
+    QString sql = "SELECT `value` FROM `config` WHERE `key`='maploaded' LIMIT 1";
+    qry_get_config.prepare(sql);
+    if( !qry_get_config.exec() ){
+        qDebug() << qry_get_config.lastError();
+        return;
+    }
+    if(! qry_get_config.next()){
+        QDomNodeList objectList = root.elementsByTagName("objectgroup").at(0).toElement().childNodes();
+        for (int o = 0; o < objectList.count(); o++) {
+            QDomNode objectNode = objectList.at(o);
+            QString x = objectNode.toElement().attribute("x");
+            QString y = objectNode.toElement().attribute("y");
+            QString width = objectNode.toElement().attribute("width");
+            QString height = objectNode.toElement().attribute("height");
+            QString type = objectNode.toElement().attribute("name");
+
+            QSqlQuery qry_config;
+            QString sql_config = "INSERT INTO `config` (`key`, `value`) VALUES ('maploaded','true')";
+            qry_config.prepare(sql_config);
+
+            if( !qry_config.exec() ){
+                qDebug() << qry_config.lastError();
+                return;
+            }
+
+
+            // save in mysql
+            QSqlQuery qry;
+            QString sql = "INSERT INTO `car_pos` (`x`, `y`, `width`, `height`, `status`, `type`, `pos_num`) VALUES ('";
+            sql += x;
+            sql += "','";
+            sql += y;
+            sql += "','";
+            sql += width;
+            sql += "','";
+            sql += height;
+            sql += "','free','";
+            sql += type;
+            sql += "','";
+            sql += QString::number(o+1);
+            sql += "')";
+            qry.prepare(sql);
+            if( !qry.exec() ){
+                qDebug() << qry.lastError();
+                return;
+            }
+        }
+    }
+
 
     QSize mapSize( mapWidth * tileWidth, mapHeight * tileHeight );
     QImage mapImage(mapSize,QImage::Format_RGB888);
@@ -92,28 +140,19 @@ void drawMap::parserXmlFile(){
 
                 QRect tagmapRect(sourceX * currentTileset->tilewidth, sourceY * currentTileset->tilewidth, currentTileset->tilewidth, currentTileset->tileheight);
                 QRect sorcmapRect(destX,destY,currentTileset->tilewidth, currentTileset->tileheight);
-//                qDebug() << tagmapRect;
-//                qDebug() << sorcmapRect;
                 mapPainter.drawImage(sorcmapRect, currentTileset->image, tagmapRect);
             }
         }
+
+
     }
 
-    // show map
-    QLabel *label = new QLabel;
-//    qDebug() << map_created -> tilesetVector.at(0)->source;
-//    label -> setPixmap(QPixmap::fromImage(map_created -> tilesetVector.at(0)->image));
-    label -> setPixmap(QPixmap::fromImage(mapImage));
-//    parking/build-parking-Desktop_Qt_5_3_GCC_64bit-Debug/assets/tileset/grass-tiles-2-small.png
-//    label -> setPixmap(QPixmap::fromImage(QImage("parking/build-parking-Desktop_Qt_5_3_GCC_64bit-Debug/assets/tileset/grass-tiles-2-small.png")));
-    QScrollArea *scrollArea = new QScrollArea;
-    scrollArea->setWindowTitle("停车场平面图");
-    scrollArea->setWidget(label);
-    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    scrollArea->viewport()->setBackgroundRole(QPalette::Dark);
+    nav * mapShow = new nav();
+    mapShow -> showImage(mapImage);
+}
 
-    scrollArea -> show();
+void drawMap::draw_widh_nav(){
+
 }
 
 
