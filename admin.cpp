@@ -56,6 +56,7 @@ void admin::on_open_fille_clicked()
 
 void admin::on_import_2_clicked()
 {
-    drawMap *map = new drawMap("/home/tairy/Documents/untitled1.xml");
+    QString xmlFilePath = ui -> FilePath ->text();
+    drawMap *map = new drawMap(xmlFilePath);
     map -> draw();
 }

@@ -51,9 +51,9 @@ void drawMap::parserXmlFile(){
 //    QPixmap *screenBitmap = new QPixmap(mapWidth * tileWidth, mapHeight * tileHeight);
 //    QBitmap *screenBitmapTopLayer = new QBitmap(mapWidth*tileWidth,mapHeight*tileHeight);
 
-//    QSize mapSize( mapWidth * tileWidth, mapHeight * tileHeight );
-//    QImage mapImage(mapSize,QImage::Format_RGB32);
-//    QPainter mapPainter(&mapImage);
+    QSize mapSize( mapWidth * tileWidth, mapHeight * tileHeight );
+    QImage mapImage(mapSize,QImage::Format_RGB888);
+    QPainter mapPainter(&mapImage);
 
     QDomNodeList layerList = root.elementsByTagName("layer");
 
@@ -76,52 +76,42 @@ void drawMap::parserXmlFile(){
             for(int spriteForY = 0; spriteForY < mapHeight; spriteForY++) {
                 int tileGid = tiles[(spriteForX + (spriteForY * mapWidth))];
                 tileset * currentTileset;
-
                 foreach(tileset *item, map_created -> tilesetVector) {
-                    if(tileGid >= item -> firstGid && tileGid <= item -> lastGid){
+                    if(tileGid >= item -> firstGid -1 && tileGid <= item -> lastGid){
                         currentTileset = item;
                         break;
                     }
                 }
 
-//                int destY = spriteForY * tileWidth;
-//                int destX = spriteForX * tileWidth;
-//                qDebug() << currentTileset->firstGid;
-//                tileGid -= currentTileset->firstGid -1;
-//                int sourceY = qCeil( tileGid / currentTileset->tileAmountWidth ) - 1;
-//                int sourceX = tileGid - (currentTileset->tileAmountWidth * sourceY) - 1;
-//                qDebug() << sourceX * currentTileset->tilewidth;
-//                qDebug() << sourceY * currentTileset->tilewidth;
-//                qDebug() << currentTileset->tilewidth;
-//                qDebug() << currentTileset->tileheight;
-//                QRect tagmapRect(sourceX * currentTileset->tilewidth, sourceY * currentTileset->tilewidth, currentTileset->tilewidth, currentTileset->tileheight);
-//                QRect tagmapRect(20,20,50,50);
-//                QRect sorcmapRect(destX,destY,currentTileset->tilewidth, currentTileset->tileheight);
-//                mapPainter.drawImage(tagmapRect, currentTileset->image, sorcmapRect);
+                int destY = spriteForY * tileWidth;
+                int destX = spriteForX * tileWidth;
+
+                tileGid -= currentTileset -> firstGid -1;
+                int sourceY = qFloor( tileGid / currentTileset->tileAmountWidth );
+                int sourceX = tileGid - (currentTileset->tileAmountWidth * sourceY) - 1;
+
+                QRect tagmapRect(sourceX * currentTileset->tilewidth, sourceY * currentTileset->tilewidth, currentTileset->tilewidth, currentTileset->tileheight);
+                QRect sorcmapRect(destX,destY,currentTileset->tilewidth, currentTileset->tileheight);
+//                qDebug() << tagmapRect;
+//                qDebug() << sorcmapRect;
+                mapPainter.drawImage(sorcmapRect, currentTileset->image, tagmapRect);
             }
         }
     }
 
-//    QPixmap test_1 = QPixmap::fromImage(map_created -> tilesetVector.at(0)->image);
-//    QPixmap test_2 = test_1.copy(30,20,50,50);
-//    QSize testsize = QSize( mapWidth * tileWidth, mapHeight * tileHeight );
-//    QImage testimage_1(testsize,QImage::Format_RGB32);
-
-//    QPainter painter(&testimage_1);
-//    QImage image_1;
-//    QRect  test_rec(30,20,50,50);
-//    painter.drawImage(test_rec,map_created -> tilesetVector.at(0)->image,test_rec);
-//    painter.drawImage(20,20,map_created -> tilesetVector.at(0)->image,50,50);
-
     // show map
     QLabel *label = new QLabel;
-    label -> setPixmap(QPixmap::fromImage(map_created -> tilesetVector.at(0)->image));
+//    qDebug() << map_created -> tilesetVector.at(0)->source;
+//    label -> setPixmap(QPixmap::fromImage(map_created -> tilesetVector.at(0)->image));
+    label -> setPixmap(QPixmap::fromImage(mapImage));
+//    parking/build-parking-Desktop_Qt_5_3_GCC_64bit-Debug/assets/tileset/grass-tiles-2-small.png
+//    label -> setPixmap(QPixmap::fromImage(QImage("parking/build-parking-Desktop_Qt_5_3_GCC_64bit-Debug/assets/tileset/grass-tiles-2-small.png")));
     QScrollArea *scrollArea = new QScrollArea;
     scrollArea->setWindowTitle("停车场平面图");
     scrollArea->setWidget(label);
     scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-//    scrollArea->viewport()->setBackgroundRole(QPalette::Dark);
+    scrollArea->viewport()->setBackgroundRole(QPalette::Dark);
 
     scrollArea -> show();
 }

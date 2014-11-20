@@ -10,6 +10,6 @@ tileset::tileset(int imageWidth, int imageHeight, int firstGid, int tilewidth, i
 	this -> name = name;
     this -> tileAmountWidth = qFloor(imageWidth / tilewidth);
     this -> lastGid = tileAmountWidth * qFloor(imageHeight / tileheight) + firstGid - 1;
-    QString imagePath = "./assets/" + this -> source;
+    QString imagePath = "/home/tairy/Documents/" + this -> source;
     this -> image = QImage(imagePath);
 }
