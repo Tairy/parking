@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     map.cpp \
     drawmap.cpp \
     tileset.cpp \
-    nav.cpp
+    nav.cpp \
+    config.cpp \
+    database.cpp
 
 HEADERS  += mainwindow.h \
     in.h \
@@ -31,7 +33,9 @@ HEADERS  += mainwindow.h \
     map.h \
     drawmap.h \
     tileset.h \
-    nav.h
+    nav.h \
+    config.h \
+    database.h
 
 FORMS    += mainwindow.ui \
     in.ui \

@@ -59,8 +59,10 @@ void in::displayTime(){
 }
 
 QString in::allocationPos(){
+//    new database();
+
     QSqlQuery qry;
-    qry.prepare( "SELECT * FROM `car_pos` WHERE `status` = 'free' LIMIT 1" );
+    qry.prepare( "SELECT * FROM `car_pos` WHERE `status` = 'free' and `type` = 'position' LIMIT 1" );
     if( !qry.exec() ){
         qDebug() << qry.lastError();
         return "DB ERROR";
@@ -72,29 +74,23 @@ QString in::allocationPos(){
     }
 }
 
-void in::on_enter_clicked()
-{
+void in::on_enter_clicked() {
+//    new database();
+
     if(ui -> car_num -> isEnabled()){
         QString input_car_num = ui -> car_num -> text();
         QString input_in_time = ui -> in_time -> text();
         QString input_place_id = ui -> pos -> text();
 
         QSqlQuery qry;
-        QString sql = "INSERT INTO `spaces` (`car_num`, `place_id`, `in_time`) VALUES ('";
-        sql += input_car_num;
-        sql += "','";
-        sql += input_place_id;
-        sql += "','";
-        sql += input_in_time;
-        sql +="')";
+        QString sql = "INSERT INTO `spaces` (`car_num`, `place_id`, `in_time`) VALUES ('"+ input_car_num +"', '"+ input_place_id +"', '"+ input_in_time +"')";
 
         qry.prepare(sql);
 
         if( !qry.exec() ) {
             qDebug() << qry.lastError();
         } else {
-            QString  sql_up = "UPDATE `car_pos` SET `status` = 'full' WHERE id = ";
-            sql_up += input_place_id;
+            QString  sql_up = "UPDATE `car_pos` SET `status` = 'full' WHERE id = '"+input_place_id+"'";
             qry.prepare(sql_up);
             if( !qry.exec() )
                 qDebug() << qry.lastError();

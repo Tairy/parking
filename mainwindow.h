@@ -20,7 +20,6 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    bool db_connect();
     ~MainWindow();
 
 private slots:

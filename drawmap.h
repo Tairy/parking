@@ -18,11 +18,12 @@ class drawMap
 {
 public:
     drawMap(QString xmlFilePath);
+    void importXmlFile();
     void draw();
     void draw_widh_nav();
 private:
 	QString xmlFilePath;
-	void parserXmlFile();
+    QImage convertXmlToImage();
 };
 
 #endif // DRAWMAP_H

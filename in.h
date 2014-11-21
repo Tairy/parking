@@ -8,6 +8,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include "mainwindow.h"
+#include "database.h"
 
 namespace Ui {
 class in;

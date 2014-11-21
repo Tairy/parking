@@ -6,6 +6,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QFileDialog>
+#include "config.h"
 #include "drawmap.h"
 
 namespace Ui {
@@ -33,6 +34,7 @@ private slots:
 
 private:
     Ui::admin *ui;
+    config *adminConfig;
 };
 
 #endif // ADMIN_H

@@ -51,9 +51,7 @@ void out::on_textEdit_2_textChanged()
 {
     QString input_car_num = ui -> textEdit_2 -> text();
     QSqlQuery qry;
-    QString sql = "SELECT * FROM `spaces` WHERE `car_num`='";
-    sql += input_car_num;
-    sql += "' LIMIT 1";
+    QString sql = "SELECT * FROM `spaces` WHERE `car_num`='"+ input_car_num +"' LIMIT 1";
     qry.prepare(sql);
     if( !qry.exec() ){
         qDebug() << qry.lastError();
@@ -89,15 +87,12 @@ void out::on_leave_clicked()
     QString input_car_num = ui -> textEdit_2 -> text();
     QString input_pos_id = ui -> car_pos -> text();
     QSqlQuery qry;
-    QString sql = "DELETE FROM `spaces` WHERE `car_num` = '";
-    sql += input_car_num;
-    sql += "'";
+    QString sql = "DELETE FROM `spaces` WHERE `car_num` = '"+input_car_num+"'";
     qry.prepare(sql);
     if( !qry.exec() ){
         qDebug() << qry.lastError();
     } else {
-        QString  sql_up = "UPDATE `car_pos` SET `status` = 'free' WHERE id = ";
-        sql_up += input_pos_id;
+        QString  sql_up = "UPDATE `car_pos` SET `status` = 'free' WHERE id = '" + input_pos_id + "'";
         qry.prepare(sql_up);
         if( !qry.exec() ){
             qDebug() << qry.lastError();
