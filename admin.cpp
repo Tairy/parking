@@ -67,46 +67,43 @@ void admin::on_viewmap_clicked() {
 }
 
 void admin::on_go_clicked() {
-    QSqlQuery qry_xmlpath;
-    QString sql_xmlpath = "SELECT `value` FROM `config` WHERE `key`='xmlpath' LIMIT 1";
-    qry_xmlpath.prepare(sql_xmlpath);
-    if( !qry_xmlpath.exec() ){
-        qDebug() << qry_xmlpath.lastError();
-        return;
-    }
-    if( qry_xmlpath.next() ){
-        QString xmlpath = qry_xmlpath.value(0).toString();
-    }
 
+    QString xmlpath = this -> adminConfig ->getConfigOption("xmlpath");
     QString to_pos_num = ui -> to_pos_num ->text();
+
+    int x, y, width, height, door_x, door_y, door_width, door_height;
+
     QSqlQuery qry, qry_door;
-    QString sql = "SELECT * FROM `car_pos` WHERE `pos_num`='";
-    sql += to_pos_num;
-    sql += "' LIMIT 1";
+    QString sql = "SELECT * FROM `car_pos` WHERE `pos_num`='" + to_pos_num +"' LIMIT 1";
     qry.prepare(sql);
     if( !qry.exec() ){
         qDebug() << qry.lastError();
         return;
     }
     if( qry.next() ){
-        QString x = qry.value(1).toString();
-        QString y = qry.value(2).toString();
-        QString width = qry.value(3).toString();
-        QString height = qry.value(4).toString();
+        x = qry.value(1).toInt();
+        y = qry.value(2).toInt();
+        width = qry.value(3).toInt();
+        height = qry.value(4).toInt();
 
-        QString door_pos_sql = "SELECT * FROM `car_pos` WHERE `type`='door'";
+        QString door_pos_sql = "SELECT * FROM `car_pos` WHERE `type`='door' LIMIT 1";
         qry_door.prepare(door_pos_sql);
         if( !qry_door.exec() ){
             qDebug() << qry_door.lastError();
             return;
         }
         if(qry_door.next()) {
-            QString door_x = qry.value(1).toString();
-            QString door_y = qry.value(2).toString();
-
-//            drawMap *map = new drawMap(xmlpath);
-//            map -> draw_widh_nav();
+            door_x = qry_door.value(1).toInt();
+            door_y = qry_door.value(2).toInt();
+            door_width = qry_door.value(3).toInt();
+            door_height = qry_door.value(4).toInt();
         }
     }
 
+    QPoint *doorPoint = new QPoint(door_x + door_width/2,door_y);
+    QPoint *centerPoint = new QPoint(door_x + door_width/2, y + height + width/2);
+    QPoint *targetPoint = new QPoint(x + width/2, y + height + width/2);
+    QPoint *lastPoint = new QPoint(x + width/2, y + height);
+    drawMap *map = new drawMap(xmlpath);
+    map -> draw_widh_nav(*doorPoint, *centerPoint, *targetPoint, *lastPoint);
 }

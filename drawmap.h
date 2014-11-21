@@ -20,7 +20,7 @@ public:
     drawMap(QString xmlFilePath);
     void importXmlFile();
     void draw();
-    void draw_widh_nav();
+    void draw_widh_nav(QPoint& doorPoint, QPoint& centerPoint, QPoint& targetPoint, QPoint &lastPoint);
 private:
 	QString xmlFilePath;
     QImage convertXmlToImage();

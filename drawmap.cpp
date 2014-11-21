@@ -41,7 +41,6 @@ void drawMap::importXmlFile(){
             return;
         }
 
-
         // save in mysql
         QSqlQuery qry;
         QString sql = "INSERT INTO `car_pos` (`x`, `y`, `width`, `height`, `status`, `type`, `pos_num`) VALUES ('" + x + "','" + y + "','" + width + "','" + height + "','free','" + type + "','" + QString::number(o+1) + "')";
@@ -142,8 +141,20 @@ QImage drawMap::convertXmlToImage(){
     return mapImage;
 }
 
-void drawMap::draw_widh_nav(){
-
+void drawMap::draw_widh_nav(QPoint& doorPoint, QPoint& centerPoint, QPoint& targetPoint, QPoint& lastPoint){
+    QImage mapImage = this -> convertXmlToImage();
+    QPainter mapPainter(&mapImage);
+    mapPainter.setBrush(Qt::red);
+    mapPainter.setPen(QPen(Qt::red, 4));
+    mapPainter.drawLine(doorPoint, centerPoint);
+    mapPainter.drawLine(centerPoint, targetPoint);
+    mapPainter.drawLine(targetPoint, lastPoint);
+//    mapPainter.drawText(lastPoint,);
+    qDebug() << doorPoint;
+    qDebug() << centerPoint;
+    qDebug() << targetPoint;
+    nav * mapShow = new nav();
+    mapShow -> showImage(mapImage);
 }
 
 

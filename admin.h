@@ -6,6 +6,7 @@
 #include <QtDebug>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QPoint>
 #include "config.h"
 #include "drawmap.h"
 
