@@ -9,6 +9,7 @@
 #include <QPoint>
 #include "config.h"
 #include "drawmap.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class admin;
@@ -32,6 +33,8 @@ private slots:
     void on_viewmap_clicked();
 
     void on_go_clicked();
+
+    void on_back_clicked();
 
 private:
     Ui::admin *ui;

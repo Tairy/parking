@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
     ui->setupUi(this);
+    this -> adminConfig = new config();
     setWindowTitle("停车场管理系统");
 }
 
@@ -34,5 +35,7 @@ void MainWindow::on_admin_clicked() {
 }
 
 void MainWindow::on_nav_clicked() {
-
+    QString xmlpath = this -> adminConfig ->getConfigOption("xmlpath");
+    drawMap *map = new drawMap(xmlpath);
+    map -> draw();
 }

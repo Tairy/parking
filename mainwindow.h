@@ -33,6 +33,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    config *adminConfig;
 };
 
 #endif // MAINWINDOW_H

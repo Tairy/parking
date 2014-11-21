@@ -20,10 +20,12 @@ public:
     drawMap(QString xmlFilePath);
     void importXmlFile();
     void draw();
-    void draw_widh_nav(QPoint& doorPoint, QPoint& centerPoint, QPoint& targetPoint, QPoint &lastPoint);
+    QImage markParkingPos(QImage mapImage);
+    QImage draw_widh_nav(QString to_pos_num);
+    QImage convertXmlToImage();
+
 private:
 	QString xmlFilePath;
-    QImage convertXmlToImage();
 };
 
 #endif // DRAWMAP_H

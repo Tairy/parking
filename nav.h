@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <QScrollArea>
 #include <QLabel>
+#include "config.h"
+#include "drawmap.h"
+#include "mainwindow.h"
 
 namespace Ui {
 class nav;
@@ -18,10 +21,14 @@ public:
     void showImage(QImage image);
     ~nav();
 
+private slots:
+    void on_go_clicked();
+
 private:
     Ui::nav *ui;
     QScrollArea *scrollArea;
     QLabel *label;
+    config *adminConfig;
 };
 
 #endif // NAV_H

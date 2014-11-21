@@ -4,6 +4,7 @@ drawMap::drawMap(QString xmlFilePath){
 		this -> xmlFilePath = xmlFilePath;
 }
 
+// not use
 void drawMap::draw(){
     QImage mapImage = this -> convertXmlToImage();
 
@@ -50,6 +51,38 @@ void drawMap::importXmlFile(){
             return;
         }
     }
+}
+
+QImage drawMap::markParkingPos(QImage mapImage){
+    QSqlQuery qry;
+    QString sql = "SELECT * FROM `car_pos` WHERE `type` = 'position'";
+    int x, y,width,heigth;
+    QString pos, status;
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        exit(0);
+    }
+    while( qry.next() ){
+        x = qry.value(1).toInt();
+        y = qry.value(2).toInt();
+        width = qry.value(3).toInt();
+        heigth = qry.value(4).toInt();
+        status = qry.value(5).toString();
+        pos = qry.value(7).toString();
+        QPainter mapPrinter(&mapImage);
+        if(status == "full"){
+            mapPrinter.setPen(QPen(Qt::red, 6));
+            pos += "/有车";
+        } else {
+            mapPrinter.setPen(QPen(Qt::yellow, 6));
+            pos += "/空闲";
+        }
+
+        QPointF point = QPointF(x+10,y+heigth/2);
+        mapPrinter.drawText(point,pos);
+    }
+    return mapImage;
 }
 
 QImage drawMap::convertXmlToImage(){
@@ -138,23 +171,54 @@ QImage drawMap::convertXmlToImage(){
         }
     }
 
-    return mapImage;
+    return this ->markParkingPos(mapImage);
 }
 
-void drawMap::draw_widh_nav(QPoint& doorPoint, QPoint& centerPoint, QPoint& targetPoint, QPoint& lastPoint){
+QImage drawMap::draw_widh_nav(QString to_pos_num){
     QImage mapImage = this -> convertXmlToImage();
+//    mapImage = this ->markParkingPos(mapImage);
     QPainter mapPainter(&mapImage);
-    mapPainter.setBrush(Qt::red);
     mapPainter.setPen(QPen(Qt::red, 4));
-    mapPainter.drawLine(doorPoint, centerPoint);
-    mapPainter.drawLine(centerPoint, targetPoint);
-    mapPainter.drawLine(targetPoint, lastPoint);
-//    mapPainter.drawText(lastPoint,);
-    qDebug() << doorPoint;
-    qDebug() << centerPoint;
-    qDebug() << targetPoint;
-    nav * mapShow = new nav();
-    mapShow -> showImage(mapImage);
+
+    int x, y, width, height, door_x, door_y, door_width;
+
+    QSqlQuery qry, qry_door;
+    QString sql = "SELECT * FROM `car_pos` WHERE `pos_num`='" + to_pos_num +"' LIMIT 1";
+    qry.prepare(sql);
+    if( !qry.exec() ){
+        qDebug() << qry.lastError();
+        exit(0);
+    }
+    if( qry.next() ){
+        x = qry.value(1).toInt();
+        y = qry.value(2).toInt();
+        width = qry.value(3).toInt();
+        height = qry.value(4).toInt();
+
+        QString door_pos_sql = "SELECT * FROM `car_pos` WHERE `type`='door' LIMIT 1";
+        qry_door.prepare(door_pos_sql);
+        if( !qry_door.exec() ){
+            qDebug() << qry_door.lastError();
+            exit(0);
+        }
+        if(qry_door.next()) {
+            door_x = qry_door.value(1).toInt();
+            door_y = qry_door.value(2).toInt();
+            door_width = qry_door.value(3).toInt();
+        }
+    }
+
+    QPoint *doorPoint = new QPoint(door_x + door_width/2,door_y);
+    QPoint *centerPoint = new QPoint(door_x + door_width/2, y + height + width/2);
+    QPoint *targetPoint = new QPoint(x + width/2, y + height + width/2);
+    QPoint *lastPoint = new QPoint(x + width/2, y + height);
+
+
+    mapPainter.drawLine(*doorPoint, *centerPoint);
+    mapPainter.drawLine(*centerPoint, *targetPoint);
+    mapPainter.drawLine(*targetPoint, *lastPoint);
+
+    return mapImage;
 }
 
 
