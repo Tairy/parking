@@ -6,133 +6,72 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>557</height>
+    <width>677</width>
+    <height>217</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>611</width>
-      <height>501</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>基本操作</string>
-     </attribute>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>81</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Import Map:</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>70</y>
-        <width>331</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLineEdit" name="FilePath"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="open_fille">
-         <property name="text">
-          <string>Browse</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QPushButton" name="import_2">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>160</y>
-        <width>80</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Import</string>
-      </property>
-     </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="4" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="to_pos_num"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="go">
+        <property name="text">
+         <string>go</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
      <widget class="QPushButton" name="viewmap">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>240</y>
-        <width>80</width>
-        <height>23</height>
-       </rect>
-      </property>
       <property name="text">
        <string>View map</string>
       </property>
      </widget>
-     <widget class="QWidget" name="horizontalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>290</y>
-        <width>301</width>
-        <height>71</height>
-       </rect>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="import_2">
+      <property name="text">
+       <string>Import</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="to_pos_num"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="go">
-         <property name="text">
-          <string>go</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </widget>
+    </item>
+    <item row="5" column="0">
      <widget class="QPushButton" name="back">
-      <property name="geometry">
-       <rect>
-        <x>390</x>
-        <y>400</y>
-        <width>80</width>
-        <height>23</height>
-       </rect>
-      </property>
       <property name="text">
        <string>Back</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>车库状态</string>
-     </attribute>
-    </widget>
-   </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Import Map:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLineEdit" name="FilePath"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="open_fille">
+        <property name="text">
+         <string>Browse</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

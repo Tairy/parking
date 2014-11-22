@@ -8,6 +8,7 @@
 #include "in.h"
 #include "out.h"
 #include "admin.h"
+#include "dialog.h"
 
 
 namespace Ui {

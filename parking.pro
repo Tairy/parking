@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     tileset.cpp \
     nav.cpp \
     config.cpp \
-    database.cpp
+    database.cpp \
+    dialog.cpp
 
 HEADERS  += mainwindow.h \
     in.h \
@@ -35,10 +36,12 @@ HEADERS  += mainwindow.h \
     tileset.h \
     nav.h \
     config.h \
-    database.h
+    database.h \
+    dialog.h
 
 FORMS    += mainwindow.ui \
     in.ui \
     out.ui \
     admin.ui \
-    nav.ui
+    nav.ui \
+    dialog.ui

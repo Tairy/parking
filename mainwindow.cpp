@@ -23,15 +23,14 @@ void MainWindow::on_in_clicked() {
 void MainWindow::on_out_clicked() {
     out *outWindow;
     outWindow = new out();
-    this -> close();
+    this -> hide();
     outWindow -> show();
 }
 
 void MainWindow::on_admin_clicked() {
-    admin *adminWindow;
-    adminWindow = new admin();
-    this -> close();
-    adminWindow -> show();
+    Dialog *loginDialog = new Dialog();
+    loginDialog -> show();
+    this ->close();
 }
 
 void MainWindow::on_nav_clicked() {
