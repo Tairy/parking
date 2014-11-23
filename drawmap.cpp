@@ -6,6 +6,7 @@ drawMap::drawMap(QString xmlFilePath){
 
 // not use
 void drawMap::draw(){
+    this -> importXmlFile();
     QImage mapImage = this -> convertXmlToImage();
 
     nav * mapShow = new nav();
@@ -22,6 +23,7 @@ void drawMap::importXmlFile(){
 
     xmlBOM.setContent(&f);
     f.close();
+
 
     QDomElement root = xmlBOM.documentElement();
     QDomNodeList objectList = root.elementsByTagName("objectgroup").at(0).toElement().childNodes();

@@ -28,6 +28,7 @@ void admin::on_import_2_clicked() {
     QString xmlFilePath = ui -> FilePath ->text();
 
     drawMap *map = new drawMap(xmlFilePath);
+    map -> importXmlFile();
     QImage mapImage = map -> convertXmlToImage();
     nav *navShow = new nav();
     navShow -> showImage(mapImage);
